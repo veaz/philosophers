@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../include/philo.h"
 
 void	ft_first_value(t_master *master, char **argv)
 {
@@ -25,6 +25,8 @@ void	ft_first_value(t_master *master, char **argv)
 	master->start = 0;
 	if (master->argc == 5)
 		master->will_eat = ft_atoi(argv[5]);
+	else
+		master->will_eat = -1;
 	// if (gettimeofday(&time, NULL) == 0) //Significa que se realizo de manera correcta
 	// {
 	// 	master->time_start = time.tv_usec; //tv_sec --> Segundos && tv_usec --> Microsegundos
@@ -44,9 +46,8 @@ int	main(int argc, char **argv)
 	
 	argc = argc - 1;
 	master.argc = argc;
-	pthread_mutex_init(&master.mutex, NULL);
-	if (pthread_mutex_lock(&master.mutex) == 0)
-		printf("BLOCK\n");
+
+
 	if (argc <= 3 || argc >= 6)
 	{
 		printf("ERROR EN NUMERO DE ARGUMENTOS\n");
@@ -100,5 +101,18 @@ int	main(int argc, char **argv)
 
 /* 
 Falta obtener el identificador del hilo
+
+
+Esta es la version que tenia en mi casa
+
+
+
+OJO:
+*	Enviarme menos datos a los hijos, una mini estructura con los datos necesarios.
+
+TO DO:
+*	Hacer todos los tenedores
+
+
 
 */

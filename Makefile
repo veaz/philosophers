@@ -1,15 +1,15 @@
-SRCS = philo.c \
-	check.c \
-	libft.c \
-	print.c \
-	child.c \
-	time.c	\
+SRCS = ./src/philo.c \
+	./src/check.c \
+	./src/libft.c \
+	./src/print.c \
+	./src/child.c \
+	./src/time.c	\
 
 OBJS = $(SRCS:.c=.o)
 
 NAME = philo
 
-HEADER = philo.h
+HEADER = ./include/philo.h
 
 CC = gcc
 
@@ -39,4 +39,4 @@ norme:
 	norminette -R CheckForbiddenSourceHeader $(SRCS)
 
 test: all
-	./philo 4 200 200 200
+	./philo 4 1000 200 200 2

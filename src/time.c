@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../include/philo.h"
 
 void	ft_sleep(int	ms)
 {
@@ -73,6 +73,30 @@ int	ft_get_time(int ms)
 	// 	transcurrido = transcurrido + 10;
 	// }
 	return (1);
+}
+
+
+long long int	ft_actual_time()
+{
+	struct timeval time;
+	long long int seconds;
+	long long int microseconds;
+	long long int actual;
+	
+	seconds = 0;
+	microseconds = 0;
+	if (gettimeofday(&time, NULL) == 0) //Significa que se realizo de manera correcta
+	{
+		seconds = time.tv_sec * 1000000;
+		microseconds = time.tv_usec;
+	}
+	else
+		printf("ERROR AL MOMENTO DE OBTENER EL TIEMPO\n");
+	//printf("SECONDS == (%lld), MICROSECONDS == (%lld)\n", seconds, microseconds);
+	actual = seconds + microseconds;
+	//printf("ACTUAL == (%lld)\n", actual);
+	return (actual); //Aqui trabajo con usec/microseconds
+
 }
 
 long long int	ft_diff_time(int time_start)

@@ -50,6 +50,7 @@ void	*ft_child(void *master);
 /* TIME */
 void	ft_sleep(int	ms);
 int		ft_get_time(int ms);
+long long int	ft_actual_time();
 long long int	ft_diff_time(int time_start);
 
 #endif
