@@ -18,8 +18,8 @@ void	ft_create_childs(t_master *master) //Sex function
 	pthread_t *childs;
 	int	seconds;
 	int	microseconds;
-	// pthread_mutex_t	**tenedores;
-	// pthread_mutex_t	aux;
+	//pthread_mutex_t	**tenedores;
+	//pthread_mutex_t	*aux;
 
 	// pthread_t h1[4];
 
@@ -31,23 +31,27 @@ void	ft_create_childs(t_master *master) //Sex function
 	x = 0;
 	printf("FT_CREATE_CHILDS\n");
 	// printf("h-TIME MAIN == (%i)\n", master->time_start);
-	childs = (pthread_t *)malloc(master->number_philo + 1);
-	// if (pthread_create(&h1[x], NULL , ft_hola, (void *)&test) == 0)
-	// 	printf("CHILD [1] CREATE\n");
-	// pthread_join(h1[x], NULL);
+	childs = (pthread_t *)malloc(master->number_philo * sizeof(pthread_t *)); // WARNING : ES NECESARIO AGREGAR +1 ??
 
-	// if (pthread_create(&childs[x], NULL , ft_child, (void *)&test) == 0) //FUNCIONAL
-	// 	printf("CHILD [1] CREATE\n");
-	// test.start = 1;
-	// printf("START NOW == (%i)\n", test.start);
-	// pthread_join(childs[x], NULL);
+	master->mutex = (pthread_mutex_t **)malloc(master->number_philo * sizeof(pthread_mutex_t *));
 
-	// if (pthread_create(&childs[x], NULL , ft_child, (void *)&master) == 0) // CRISIS EXISTENCIAL ACERCA DE ENVIAR *STRUCT O STRUCT SIN PUNTERO
-	// 	printf("CHILD [1] CREATE\n");
-	// master->start = 1;
-	// printf("START NOW == (%i)\n", master->start);
-	// pthread_join(childs[x], NULL);
+	//tenedores = (pthread_mutex_t **)malloc(master->number_philo * sizeof(pthread_mutex_t *));
+	while (x < master->number_philo)
+	{
+		
+		master->mutex[x] = malloc(sizeof(pthread_mutex_t));
+		//aux = *master->mutex[x];
+		//aux = tenedores[x];
+		pthread_mutex_init(master->mutex[x], NULL);
+		x++;
+	}
+	x = 0;
 
+	printf("HIJOS Y TENEDORES CREADOS CORRECTAMENTE\n");
+
+	/*	HIJOS Y TENEDORES CREADOS EN ESTRUCTURA MASTER	*/
+
+	
 	/* Antes de crear a los hijos creare los tenedores */
 	//pthread_mutex_init
 	// pthread_mutex_init(&master->mutex, NULL);
@@ -136,6 +140,11 @@ void	ft_create_childs(t_master *master) //Sex function
 	// printf("MAIN: X == (%i)\n", x);
 }
 
+
+
+
+
+
 void *ft_child(void *master)
 {
 	//struct timeval time;
@@ -143,6 +152,7 @@ void *ft_child(void *master)
 	long long int diff;
 	int me;
 	int	type_of_child;
+	//pthread_mutex_t	mutex;
 
 	m = (t_master *)master;
 	//printf("H: SOY EL HIJO #(%i) CREADO\n", m->childs);
@@ -175,31 +185,42 @@ void *ft_child(void *master)
 	// else
 	// 	printf("SOY #(%i) Y NO ME INTERESA MAS\n", me + 1);
 
-	/*if (pthread_mutex_lock(&m->mutex) == 0)
-	{
-		printf("CHILD BLOCK GOOD BYE\n");
-		return NULL;
-		//exit(0);
-	}*/
+	// if (pthread_mutex_lock(m->mutex[me]) == 0)
+	// {
+	// 	printf("CHILD BLOCK GOOD BYE\n");
+	// 	return NULL;
+	// 	//exit(0);
+	// }
 	long long int eat;
 	long long int test;
 	int	x;
 	test = 0;
 	eat = 0;
 	x = 0;
+	printf("ME == (%d)\n", me);
 	if (type_of_child == 0) //Sera de los primeros en comer
 	{
 		eat = ft_actual_time() / 1000;
 		//printf("EAT == (%lld)\n", eat);
+
 		while (test <= m->time_dead && x < m->will_eat)
 		{
 			diff = ft_diff_time(m->time_start);
 			ft_print_message(diff, me, "is eating");
+
+			//printf("INTENTANDO BLOQUEAR MUTEX (%d) , & (%p)\n", me, m->mutex[me - 1]);
+			// mutex = *(m->mutex[me - 1]);
+			// pthread_mutex_lock(&mutex); //Bloqueo para comer
+			printf("BLOQUEADO (%d)\n", me - 1);
+			
 			eat = ft_actual_time();
 			x++;
 			//printf("EAT == (%lld)\nEAT / 1000 == (%lld)\n", eat, eat / 1000);
 			eat = eat / 1000;
 			ft_sleep(m->time_eat);
+			// pthread_mutex_unlock(m->mutex[me - 1]);
+			//exit(0);
+
 			diff = ft_diff_time(m->time_start);
 			ft_print_message(diff, me, "is sleeping");
 			ft_sleep(m->time_sleep);

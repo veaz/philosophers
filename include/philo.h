@@ -29,7 +29,7 @@ typedef struct s_master
 	int	time_start;
 	int start;
 	int	childs;
-	pthread_mutex_t	mutex;
+	pthread_mutex_t	**mutex;
 }t_master;
 
 /* LIBFT */

@@ -13,6 +13,8 @@ HEADER = ./include/philo.h
 
 CC = gcc
 
+# gcc -pthread
+
 CFLAGS = -Wall -Wextra -Werror -fsanitize=thread
 
 # -Wall -Wextra -Werror  -fsanitize=thread
@@ -39,4 +41,4 @@ norme:
 	norminette -R CheckForbiddenSourceHeader $(SRCS)
 
 test: all
-	./philo 4 1000 200 200 2
+	./philo 2 1000 200 200 3
