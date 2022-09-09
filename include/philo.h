@@ -18,6 +18,22 @@
 # include <pthread.h> //CREACION DE HILOS
 # include <stdlib.h> //MALLOC
 
+typedef struct s_child 
+{
+	int				num_child;
+	pthread_mutex_t	*my_fork;
+	pthread_mutex_t	*other_fork;
+	int	time_dead;
+	int	time_eat;
+	int	time_sleep;
+	int	will_eat;
+	int	*time_start;
+	int *start;
+	int	childs;
+	struct s_child	*next;
+	//t_master *master;
+}	t_child;
+
 typedef struct s_master
 {
 	int	argc;
@@ -28,8 +44,10 @@ typedef struct s_master
 	int	will_eat;
 	int	time_start;
 	int start;
-	int	childs;
+	int	number_childs;
 	pthread_mutex_t	**mutex;
+	t_child	*struct_child;
+	pthread_t *childs; //Listado de hilos/hijos
 }t_master;
 
 /* LIBFT */
@@ -44,8 +62,11 @@ int	ft_check_input(char *str);
 void	ft_print_message(int time, int child,  char *message);
 
 /* CHILD */
-void	ft_create_childs(t_master *master);
-void	*ft_child(void *master);
+ void	ft_create_childs(t_master *master);
+// void	*ft_child(void *master);
+
+/*	THREAD	*/
+void *ft_child(void *info);
 
 /* TIME */
 void	ft_sleep(int	ms);

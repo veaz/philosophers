@@ -2,8 +2,9 @@ SRCS = ./src/philo.c \
 	./src/check.c \
 	./src/libft.c \
 	./src/print.c \
-	./src/child.c \
 	./src/time.c	\
+	./src/child_real.c \
+	./src/thread.c \
 
 OBJS = $(SRCS:.c=.o)
 
@@ -15,7 +16,9 @@ CC = gcc
 
 # gcc -pthread
 
-CFLAGS = -Wall -Wextra -Werror -fsanitize=thread
+CFLAGS = -Wall -Wextra -Werror
+
+# -fsanitize=thread
 
 # -Wall -Wextra -Werror  -fsanitize=thread
 

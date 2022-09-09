@@ -12,25 +12,97 @@
 
 #include "../include/philo.h"
 
-void	ft_create_childs(t_master *master) //Sex function
+t_child	*ft_create_data(int number_philo, t_master *master)
+{
+	t_child	*thread_child;
+
+
+	printf("FT_CREATE_DATA #%i\n",number_philo);
+	thread_child = (t_child *)malloc(sizeof(t_child));
+
+	(void)master;
+
+	// number_philo = number_philo - 1;
+
+	thread_child->num_child = number_philo;
+	thread_child->time_dead =  master->time_dead;
+	thread_child->time_eat = master->time_eat;
+	thread_child->time_sleep = master->time_sleep;
+	thread_child->will_eat = master->will_eat;
+	thread_child->time_start = &master->time_start;
+	thread_child->start = &master->start;
+	
+
+	thread_child->my_fork = master->mutex[number_philo];
+
+	if (master->number_philo == 1)//Si solo hay un filosofo
+	{
+		thread_child->other_fork = master->mutex[number_philo];
+	}
+	else if (number_philo == master->number_philo)//Si estoy en el ultimo filosofo
+	{
+		thread_child->other_fork = master->mutex[0];
+	}
+	else
+	{
+		thread_child->other_fork = master->mutex[number_philo + 1];
+	}
+
+	thread_child->next = NULL;
+
+
+	return (thread_child);
+}
+
+
+
+void	ft_first_value_struct_child(t_master *master)
+{
+	int	x;
+
+	x = 0;
+	printf("NUMBER_PHILO == (%i)\n", master->number_philo);
+	master->thread_child = (t_child **)malloc(master->number_philo * sizeof(t_child *));
+
+	while (x < master->number_philo)
+	{
+		master->thread_child[x] = ft_create_data(x,master);
+		x++;
+	}
+
+	//printf("QUE TAN FUNCIONAL\n");
+	//exit(0);
+
+
+}
+
+
+
+void	ft_create_childs_222(t_master *master) //Sex function
 {
 	struct timeval time;
 	pthread_t *childs;
 	int	seconds;
 	int	microseconds;
+
 	//pthread_mutex_t	**tenedores;
 	//pthread_mutex_t	*aux;
 
 	// pthread_t h1[4];
 
-	t_master test;
-	test = *master; // SE CASTEA SOLO PARA ENVIAR A LOS HIJOS
+	// t_master test;
+	// test = *master; // SE CASTEA SOLO PARA ENVIAR A LOS HIJOS
+	t_child **test;
+	
 	
 	int	x;
 
 	x = 0;
 	printf("FT_CREATE_CHILDS\n");
-	// printf("h-TIME MAIN == (%i)\n", master->time_start);
+
+
+
+	/*	CREACION DE TENEDORES	*/
 	childs = (pthread_t *)malloc(master->number_philo * sizeof(pthread_t *)); // WARNING : ES NECESARIO AGREGAR +1 ??
 
 	master->mutex = (pthread_mutex_t **)malloc(master->number_philo * sizeof(pthread_mutex_t *));
@@ -45,6 +117,17 @@ void	ft_create_childs(t_master *master) //Sex function
 		pthread_mutex_init(master->mutex[x], NULL);
 		x++;
 	}
+	/* FIN DE CREACION DE TENEDORES*/
+
+	ft_first_value_childs(master);
+
+
+
+	//exit(0);
+
+
+	// printf("h-TIME MAIN == (%i)\n", master->time_start);
+
 	x = 0;
 
 	printf("HIJOS Y TENEDORES CREADOS CORRECTAMENTE\n");
@@ -52,61 +135,28 @@ void	ft_create_childs(t_master *master) //Sex function
 	/*	HIJOS Y TENEDORES CREADOS EN ESTRUCTURA MASTER	*/
 
 	
-	/* Antes de crear a los hijos creare los tenedores */
-	//pthread_mutex_init
-	// pthread_mutex_init(&master->mutex, NULL);
-	// tenedores = (pthread_mutex_t **)malloc(master->number_philo * sizeof(pthread_mutex_t));
-
-	// while (x < master->number_philo) //Creo los tenedores
-	// {
-	// 	aux = *tenedores[x];
-	// 	pthread_mutex_init(&aux, NULL);
-	// 	x++;
-	// }
-	// x = 0;
-	//pthread_mutex_unlock
 
 
-	// int res;
-	// int res2;
-	// res = 1;
-	// res2 = 1;
-	// res = pthread_mutex_lock(&master->mutex);
-	// printf("RES BLOQUEADO\n");
-	// res = pthread_mutex_unlock(&master->mutex);
-	// res2 = pthread_mutex_lock(&master->mutex); //Se queda esperando...
-	// printf("RES2 BLOQUEADO\n");
-	// //res2 = pthread_mutex_unlock(&master->mutex);
-
-
-
-	// printf("RES == (%d), RES2 == (%d)\n", res, res2);
-
-	// if (res == 0)
-	// 	printf("BLOCK\n");
-	// else
-	// 	printf("UNBLOCK\n");
-
-
-
-	test.childs = 0;
+	// (void)test;
+	test = master->thread_child;
+	//test.childs = 0;
 	while (x < master->number_philo) //Creo la cantidad de hijos necesarios, enviandole de momento la estructura master
 	{
-		if (pthread_create(&childs[x] , NULL , ft_child, (void *)&test) == 0)
+		if (pthread_create(&childs[x] , NULL , ft_child, (void *)test[x]) == 0)
 			x++;
 		else
 			printf("UPS! ERROR HAVING SEX, PLEASE DONT USE CONDON, WE NEED CHILDS\n");
-		test.childs++;
+	//	test.childs++;
 	}
-	// printf("HIJOS CREADOS == (%i)\n", x);
+	printf("HIJOS CREADOS == (%i)\n", x);
 	
 
 	if (gettimeofday(&time, NULL) == 0) //Significa que se realizo de manera correcta
 	{
-		test.time_start = time.tv_sec; //tv_sec --> Segundos && tv_usec --> Microsegundos
+		master->time_start = time.tv_sec; //tv_sec --> Segundos && tv_usec --> Microsegundos
 		seconds = time.tv_sec;
 		microseconds = time.tv_usec;
-		test.time_start = (time.tv_sec * 1000000) + time.tv_usec;
+		master->time_start = (time.tv_sec * 1000000) + time.tv_usec;
 		//printf("TIEMPO DE INICIO EN SEGUNDOS == (%li), + USEC == (%i)\n", time.tv_sec, test.time_start);
 		// printf("ANYOS == (%i), DIAS == (%i), HORAS == (%i), MINUTOS == (%i)\n", (((seconds / 60) / 60 ) / 24) / 365 , ((seconds / 60) / 60 ) / 24 ,  (seconds / 60) / 60, seconds / 60);
 		// printf("SECONDS == (%i), MICROSECONDS == (%i)\n", seconds, microseconds);
@@ -114,10 +164,16 @@ void	ft_create_childs(t_master *master) //Sex function
 	else
 		printf("ERROR AL MOMENTO DE OBTENER EL TIEMPO\n");
 
+	printf("TIEMPO OBTENIDO\n");
 	//usleep(2000);
 
 	//ft_sleep(100);
-	test.start = 1; // INICIO TODOS LOS HIJOS
+	master->thread_child[0]->start = &master->start;
+	printf("PRE START CHILD == (%p)\n", master->thread_child[0]->start);
+	printf("PRE START CHILD START == (%p)\n", &master->start);
+	master->start = 1; // INICIO TODOS LOS HIJOS
+	printf("START CHILD == (%i)\n", *master->thread_child[0]->start);
+	//exit(0);
 	//printf("START NOW == (%i)\n", test.start);
 	// usleep(5000);
 	x = 0;
@@ -148,25 +204,29 @@ void	ft_create_childs(t_master *master) //Sex function
 void *ft_child(void *master)
 {
 	//struct timeval time;
-	t_master *m;
+	//t_master *m;
+	t_child *m;
 	long long int diff;
 	int me;
 	int	type_of_child;
 	//pthread_mutex_t	mutex;
 
-	m = (t_master *)master;
+	//m = (t_master *)master;
+	m = (t_child *)master;
 	//printf("H: SOY EL HIJO #(%i) CREADO\n", m->childs);
 	me = m->childs;
 	type_of_child = 0;
 	//ft_print_message("SOY UN HIJO");
 	// printf("h-TIME == (%i)\n", m->time_start);
+	printf("PRE m->start == (%i)\n", *m->start);
 	while (1)
 	{
-		if (m->start == 1) // Espero a que se creen todos e inicio
+		if (*m->start == 1) // Espero a que se creen todos e inicio
 		{
 			//ft_sleep(10);
 			break;
 		}
+		printf("m->start == (%i)\n", *m->start);
 	}
 	diff = 0;
 	ft_print_message(diff, me, "has taken a fork");
@@ -203,9 +263,9 @@ void *ft_child(void *master)
 		eat = ft_actual_time() / 1000;
 		//printf("EAT == (%lld)\n", eat);
 
-		while (test <= m->time_dead && x < m->will_eat)
+		while (test <= m->time_dead && x < m->will_eat) //Si ha transcorrudien el tiempo de morir, o ha comido x cantidad de veces
 		{
-			diff = ft_diff_time(m->time_start);
+			diff = ft_diff_time(*m->time_start);
 			ft_print_message(diff, me, "is eating");
 
 			//printf("INTENTANDO BLOQUEAR MUTEX (%d) , & (%p)\n", me, m->mutex[me - 1]);
@@ -221,10 +281,10 @@ void *ft_child(void *master)
 			// pthread_mutex_unlock(m->mutex[me - 1]);
 			//exit(0);
 
-			diff = ft_diff_time(m->time_start);
+			diff = ft_diff_time(*m->time_start);
 			ft_print_message(diff, me, "is sleeping");
 			ft_sleep(m->time_sleep);
-			diff = ft_diff_time(m->time_start);
+			diff = ft_diff_time(*m->time_start);
 			ft_print_message(diff, me, "is thinking");
 			test = (ft_actual_time() / 1000) - eat;
 			printf("TEST == 0(%lld)\n", test);
@@ -244,16 +304,16 @@ void *ft_child(void *master)
 		while (test <= m->time_dead && x < m->will_eat)
 		{
 			//printf("SOY (%d), COMERE DE SEGUNDO\n", me);
-			diff = ft_diff_time(m->time_start);
+			diff = ft_diff_time(*m->time_start);
 			ft_print_message(diff, me, "is sleeping");
 			ft_sleep(m->time_sleep);
-			diff = ft_diff_time(m->time_start);
+			diff = ft_diff_time(*m->time_start);
 			ft_print_message(diff, me, "is eating");
 			eat = ft_actual_time();
 			eat = eat / 1000;
 			x++;
 			ft_sleep(m->time_eat);
-			diff = ft_diff_time(m->time_start);
+			diff = ft_diff_time(*m->time_start);
 			ft_print_message(diff, me, "is thinking");
 			test = (ft_actual_time() / 1000) - eat;
 			printf("TEST 1== (%lld)\n", test);
