@@ -120,14 +120,10 @@ long long int	ft_diff_time(int time_start)
 	{
 		seconds = time.tv_sec * 1000000;
 		microseconds = time.tv_usec;
-		//printf("TIEMPO DE INICIO EN SEGUNDOS == (%li), + USEC == (%i)\n", time.tv_sec, test.time_start);
-		// printf("ANYOS == (%i), DIAS == (%i), HORAS == (%i), MINUTOS == (%i)\n", (((seconds / 60) / 60 ) / 24) / 365 , ((seconds / 60) / 60 ) / 24 ,  (seconds / 60) / 60, seconds / 60);
-		//printf("SECONDS == (%i), MICROSECONDS == (%i)\n", seconds, microseconds);
 	}
 	else
 		printf("ERROR AL MOMENTO DE OBTENER EL TIEMPO\n");
 	actual = seconds + microseconds;
 	diff = actual - time_start;
-	//printf("DIFF == (%lli) / 1000000 == (%lli)\n", diff, diff / 1000000);
 	return (diff);
 }

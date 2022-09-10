@@ -59,7 +59,7 @@ int	ft_check_argv(char **argv);
 int	ft_check_input(char *str);
 
 /* PRINT */
-void	ft_print_message(int time, int child,  char *message);
+void	ft_print_message(int time, int child,  char *message, pthread_mutex_t *mutex_print);
 
 /* CHILD */
  void	ft_create_childs(t_master *master);

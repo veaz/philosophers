@@ -172,6 +172,7 @@ void	ft_create_childs(t_master *master) //Sex function //INICIO DEL PROGRAMA
 		//y = 0;
 		if (master->total_eats == (master->number_philo * master->will_eat)) //Si ya todos comieron
 		{
+			pthread_mutex_lock(master->mutex_print);
 			printf("YA TODOS COMIERON OK\n");
 			while (y < master->number_philo)
 			{
@@ -195,18 +196,19 @@ void	ft_create_childs(t_master *master) //Sex function //INICIO DEL PROGRAMA
 				{
 					diff = ft_diff_time(master->time_start);
 					printf("\n\n%i KILLING #%i res(%i)\n\n", diff / 1000, y, pthread_detach(master->childs[y]));
-
+					pthread_mutex_lock(master->mutex_print);
 					struct_childs[y]->my_eats = -1;
+					break;
 				}
 			}
 
 			value = ft_actual_time();
-			if (((value - struct_childs[y]->last_eat) / 1000) > master->time_dead)
+			if (((ft_actual_time() - struct_childs[y]->last_eat) / 1000) > master->time_dead)
 			{
 				printf("VALUE(%lli) - LAST_EAT(%lli) / 1000 = (%lli) > TIME_DEAD(%lli)\n", value, struct_childs[y]->last_eat, (value - struct_childs[y]->last_eat) / 1000, master->time_dead);
 				printf("EL TIEMPO PARA (%i) YA PASO MAIN, %i %i\n", x, master->total_eats, master->will_eat);
 				diff = ft_diff_time(master->time_start);
-				ft_print_message(diff, y, "dead\n");
+				ft_print_message(diff, y, "dead\n", master->mutex_print);
 				exit(0);
 			}
 			//printf("ok:: VALUE(%lli) - LAST_EAT(%lli) / 1000 = (%lli) > TIME_DEAD(%lli)\n", value, struct_childs[y]->last_eat, (value - struct_childs[y]->last_eat) / 1000, master->time_dead);
