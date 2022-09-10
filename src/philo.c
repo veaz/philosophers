@@ -19,6 +19,8 @@ void	ft_first_value(t_master *master, char **argv) //Primer valor a la estructur
 	master->time_eat = ft_atoi(argv[3]);
 	master->time_sleep = ft_atoi(argv[4]);
 	master->start = 0;
+	master->child_dead = 0;
+	master->total_eats = 0;
 	if (master->argc == 5)
 		master->will_eat = ft_atoi(argv[5]);
 	else
@@ -31,8 +33,6 @@ int	main(int argc, char **argv)
 	
 	argc = argc - 1;
 	master.argc = argc;
-
-
 	if (argc <= 3 || argc >= 6)
 	{
 		printf("ERROR EN NUMERO DE ARGUMENTOS\n");
@@ -61,19 +61,13 @@ int	main(int argc, char **argv)
 }
 
 /* 
-Falta obtener el identificador del hilo
 
+FALTA
 
-Esta es la version que tenia en mi casa
+caso de 1
+matar desde el main
 
-
-
-OJO:
-*	Enviarme menos datos a los hijos, una mini estructura con los datos necesarios.
-
-TO DO:
-*	Hacer todos los tenedores [DONE]
-*	Terminar de configurar los tenedores, OJO CON TENEDOR ME - 1, me = 0, me - 1 = -1, y ese tenedor NO EXISTE
+caso de 200 800 200 200
 
 
 

@@ -44,4 +44,17 @@ norme:
 	norminette -R CheckForbiddenSourceHeader $(SRCS)
 
 test: all
-	./philo 2 1000 200 200 3
+	./philo 5 800 200 200 7 #Solo comen 7 veces 
+
+
+
+#1 800 200 200 #El filosofo no debe comer y debe morir 					OK										OK
+
+#5 800 200 200 #Nadie debería morir 									OK										OK
+
+#5 800 200 200 7 #Solo comen 7 veces 									KO FALLA
+#5 800 200 200 7 | grep "4 is eating" | wc -l
+
+#4 410 200 200 #Nadie debería morir 									KO 64s 13s 18s 50s						OK SOLUCIONADO DESPUES DE QUITAR EL IF EN EL BUCLE THREAD
+
+#4 310 200 100 #Un filosofo debería morir 								OK										OK

@@ -18,37 +18,37 @@
 # include <pthread.h> //CREACION DE HILOS
 # include <stdlib.h> //MALLOC
 
-typedef struct s_child 
-{
-	int				num_child;
-	pthread_mutex_t	*my_fork;
-	pthread_mutex_t	*other_fork;
-	int	time_dead;
-	int	time_eat;
-	int	time_sleep;
-	int	will_eat;
-	int	*time_start;
-	int *start;
-	int	childs;
-	struct s_child	*next;
-	//t_master *master;
-}	t_child;
-
 typedef struct s_master
 {
 	int	argc;
 	int	number_philo;
-	int	time_dead;
+	long long int	time_dead;
 	int	time_eat;
 	int	time_sleep;
 	int	will_eat;
-	int	time_start;
+	long long int	time_start;
+	int				child_dead; //verifico si algun hijo ha muerto
 	int start;
 	int	number_childs;
+	int				total_eats;
 	pthread_mutex_t	**mutex;
-	t_child	*struct_child;
+	pthread_mutex_t	*mutex_print;
 	pthread_t *childs; //Listado de hilos/hijos
 }t_master;
+
+typedef struct s_child 
+{
+	pthread_mutex_t	*my_fork;
+	pthread_mutex_t	*other_fork;
+	int				num_child;
+	int				type_of_child;
+	int				total_philo;
+	int				is_alive;
+	int				will_eat;
+	int				my_eats;
+	long long int	last_eat;
+	t_master *master;
+}	t_child;
 
 /* LIBFT */
 int		ft_atoi(const char *str);
