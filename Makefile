@@ -44,7 +44,7 @@ norme:
 	norminette -R CheckForbiddenSourceHeader $(SRCS)
 
 test: all
-	./philo 5 800 200 200 7 #Solo comen 7 veces 
+	./philo 4 310 200 100 #Un filosofo debería morir 	
 
 
 
