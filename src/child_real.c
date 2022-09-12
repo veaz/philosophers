@@ -21,7 +21,7 @@ t_child	*ft_create_node_struct_child(int philo, t_master *master)
 
 	node->num_child = philo;
 	//printf("NODE NUM CHILD == (%i)\n", node.num_child);
-	printf("PHILO %i - NUMBER_PHILO %i\n", philo, master->number_philo);
+	//printf("PHILO %i - NUMBER_PHILO %i\n", philo, master->number_philo);
 	if ((philo + 1) % 2 != 0)
 	{
 		node->type_of_child = 1;
@@ -41,7 +41,7 @@ t_child	*ft_create_node_struct_child(int philo, t_master *master)
 	}
 	else if (philo == master->number_philo - 1)//Si estoy en el ultimo filosofo
 	{
-		printf("\n\nELSE IF\n\n");
+		//printf("\n\nELSE IF\n\n");
 		node->other_fork = master->mutex[0];
 	}
 	else
@@ -60,7 +60,7 @@ void	ft_create_childs(t_master *master) //Sex function //INICIO DEL PROGRAMA
 
     x = 0;
 //	struct_childs = NULL;
-    printf("FT_CREATE_CHILDS REAL\n");
+    //printf("FT_CREATE_CHILDS REAL\n");
 
     /*	CREACION DE TENEDORES	*/
 	master->mutex = (pthread_mutex_t **)malloc(master->number_philo * sizeof(pthread_mutex_t *));
@@ -73,7 +73,7 @@ void	ft_create_childs(t_master *master) //Sex function //INICIO DEL PROGRAMA
 	}
 	master->mutex_print = malloc(sizeof(pthread_mutex_t));
 	pthread_mutex_init(master->mutex_print, NULL);
-    printf("TENEDORES CREADOS\n\n");
+    //printf("TENEDORES CREADOS\n\n");
 	/* FIN DE CREACION DE TENEDORES*/
 
 
@@ -130,32 +130,32 @@ void	ft_create_childs(t_master *master) //Sex function //INICIO DEL PROGRAMA
 		//test = test->next;
 		
 	}
-	printf("HIJOS CREADOS == (%i)\n\n", x);
+	//printf("HIJOS CREADOS == (%i)\n\n", x);
     // /*  FIN DE CREACION DE HIJOS    */
 
 	master->start = 1;
 	ft_sleep(1);
 	master->time_start = ft_actual_time();
 
-	if(master->number_philo == 1)
-	{
-		printf("MAIN: SOLO TENGO 1 PHILO\n");
-		ft_sleep(100);
-		printf("DETACH == (%i)\n", pthread_detach(master->childs[0]));
+	// if(master->number_philo == 1)
+	// {
+	// 	printf("MAIN: SOLO TENGO 1 PHILO\n");
+	// 	ft_sleep(100);
+	// 	printf("DETACH == (%i)\n", pthread_detach(master->childs[0]));
 
-		printf("0 0 died\n");
-		exit(0);
-		// while(1)
-		// {
-		// 	if (master->time_start )
-		// }
+	// 	printf("0 0 died\n");
+	// 	exit(0);
+	// 	// while(1)
+	// 	// {
+	// 	// 	if (master->time_start )
+	// 	// }
 
-	}
+	// }
 	//printf("MAIN: TIME == (%lli)\n", master->time_start);
 	int y;
 	y = 0;
 	x = 0;
-	printf("ESPERANDO A QUE MUERAN\n");
+	//printf("ESPERANDO A QUE MUERAN\n");
 	long long int value;
 	int diff;
 	//while (1)
@@ -173,14 +173,14 @@ void	ft_create_childs(t_master *master) //Sex function //INICIO DEL PROGRAMA
 		if (master->total_eats == (master->number_philo * master->will_eat)) //Si ya todos comieron
 		{
 			pthread_mutex_lock(master->mutex_print);
-			printf("YA TODOS COMIERON OK\n");
+			//printf("YA TODOS COMIERON OK\n");
 			while (y < master->number_philo)
 			{
 				pthread_mutex_lock(master->mutex[y]);
 				y++;
 				exit(0);
 			}
-			printf("EXIT\n");
+			//printf("EXIT\n");
 			break;
 		}
 		// while (y < master->number_philo)
@@ -188,14 +188,17 @@ void	ft_create_childs(t_master *master) //Sex function //INICIO DEL PROGRAMA
 			//if (struct_childs[x]->last_eat)
 			if (y == master->number_philo)
 			{
+				//printf("reset\n");
 				y = 0;
 			}
 			if (master->will_eat != -1)//Si es el caso especial
 			{
-				if (struct_childs[y]->my_eats == master->will_eat)
+				//if (struct_childs[y]->my_eats == master->will_eat)
+				if ((master->will_eat * master->number_philo) == master->total_eats)
 				{
 					diff = ft_diff_time(master->time_start);
-					printf("\n\n%i KILLING #%i res(%i)\n\n", diff / 1000, y, pthread_detach(master->childs[y]));
+					//printf("\n\n%i KILLING #%i res(%i)\n\n", diff / 1000, y, pthread_detach(master->childs[y]));
+					pthread_detach(master->childs[y]);
 					pthread_mutex_lock(master->mutex_print);
 					struct_childs[y]->my_eats = -1;
 					break;
@@ -206,9 +209,9 @@ void	ft_create_childs(t_master *master) //Sex function //INICIO DEL PROGRAMA
 			if (((ft_actual_time() - struct_childs[y]->last_eat) / 1000) > master->time_dead)
 			{
 				printf("VALUE(%lli) - LAST_EAT(%lli) / 1000 = (%lli) > TIME_DEAD(%lli)\n", value, struct_childs[y]->last_eat, (value - struct_childs[y]->last_eat) / 1000, master->time_dead);
-				printf("EL TIEMPO PARA (%i) YA PASO MAIN, %i %i\n", x, master->total_eats, master->will_eat);
+				printf("EL TIEMPO PARA (%i) YA PASO MAIN, %i %i\n", y + 1, master->total_eats, master->will_eat);
 				diff = ft_diff_time(master->time_start);
-				ft_print_message(diff, y, "dead\n", master->mutex_print);
+				ft_print_message(diff, y, "died", master->mutex_print);
 				exit(0);
 			}
 			//printf("ok:: VALUE(%lli) - LAST_EAT(%lli) / 1000 = (%lli) > TIME_DEAD(%lli)\n", value, struct_childs[y]->last_eat, (value - struct_childs[y]->last_eat) / 1000, master->time_dead);
@@ -216,7 +219,7 @@ void	ft_create_childs(t_master *master) //Sex function //INICIO DEL PROGRAMA
 			y++;
 			//printf("MAIN:: TIEMPOS ok \n");
 		// }
-		y = 0;
+		//y = 0;
 
 		// if (master->child_dead == 1)
 		// {
@@ -236,7 +239,7 @@ void	ft_create_childs(t_master *master) //Sex function //INICIO DEL PROGRAMA
 		// 	break;
 		// }
 	}
-	printf(" ESPERA PERFECTA\n");
+	//printf(" ESPERA PERFECTA\n");
 
 
 }

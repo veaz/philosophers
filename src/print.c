@@ -18,6 +18,6 @@ void	ft_print_message(int time, int child,  char *message, pthread_mutex_t *mute
 
 	// pthread_mutex_init(&mutex1, NULL); //Si se envia NULL se establecen los atributos de defecto
 	pthread_mutex_lock(mutex_print); //Bloqueo y mas nadie puede escribir
-	printf("%i %i %s\n",time / 1000, child, message); //SUMAR UNO
+	printf("%i %i %s\n",time / 1000, child + 1, message); //SUMAR UNO
 	pthread_mutex_unlock(mutex_print); //Desbloqueo y que continue el siguiente a escribir
 }

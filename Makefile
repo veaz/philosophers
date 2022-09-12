@@ -44,7 +44,7 @@ norme:
 	norminette -R CheckForbiddenSourceHeader $(SRCS)
 
 test: all
-	./philo 4 310 200 100 #Un filosofo debería morir 	
+	./philo 4 410 200 200 7
 
 
 
@@ -58,3 +58,10 @@ test: all
 #4 410 200 200 #Nadie debería morir 									OK
 
 #4 310 200 100 #Un filosofo debería morir 								OK
+
+
+
+# Test Lazy
+#100 800 200 200 #Nadie deberia morir
+#105 800 200 200 #Nadie deberia morir
+#200 800 200 200 #Nadie deberia morir

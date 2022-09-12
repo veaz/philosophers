@@ -35,14 +35,14 @@ int	main(int argc, char **argv)
 	master.argc = argc;
 	if (argc <= 3 || argc >= 6)
 	{
-		printf("ERROR EN NUMERO DE ARGUMENTOS\n");
+		//printf("ERROR EN NUMERO DE ARGUMENTOS\n");
 		return (0);
 	}
 	else
 	{
 		if (ft_check_argv(argv) == 1) //Verificacion de errores
 		{
-			printf("ERROR CON UN ARGUMENTO\n");
+			//printf("ERROR CON UN ARGUMENTO\n");
 			return (0);
 		}
 	}
@@ -50,11 +50,11 @@ int	main(int argc, char **argv)
 
 	if (argc == 4) //Innecesario, pendiente de eliminar
 	{
-		printf("CASO NORMAL\n");
+		//printf("CASO NORMAL\n");
 	}
 	else if (master.argc == 5)
 	{
-		printf("CASO PECULIAR\n");
+		//printf("CASO PECULIAR\n");
 	}
 	ft_create_childs(&master); // Inicio el programa
 	return (0);
