@@ -44,7 +44,7 @@ norme:
 	norminette -R CheckForbiddenSourceHeader $(SRCS)
 
 test: re
-	./philo 1 800 200 200
+	./philo 200 800 200 200
 
 
 

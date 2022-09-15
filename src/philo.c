@@ -52,17 +52,6 @@ int	main(int argc, char **argv)
 
 FALTAN
 
-
 LEAKS
-
-caso de 1
-matar desde el main
-
-caso de 200 800 200 200
-
-
-
-
-
 
 */

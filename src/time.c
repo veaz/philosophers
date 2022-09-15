@@ -14,77 +14,22 @@
 
 void	ft_sleep(long long int ms)
 {
-	// struct timeval	time;
-	// long long int	seconds;
-	// long long int	microseconds;
 	long long int	start;
-
-	// start = 0;
-	// if (gettimeofday(&time, NULL) == 0)
-	// {
-	// 	seconds = time.tv_sec * 1000000;
-	// 	microseconds = time.tv_usec;
-	// 	start = seconds + microseconds;
-	// }
 
 	start = ft_actual_time();
 	while ((((ft_actual_time() - start) / 1000) < ms))
 	{
-		usleep(1000);
+		usleep(500);
 	}
-
-	// usleep(1000);
-
-	// (void)ms;
-	//usleep(100 * ms);
-
-	/*while (1)
-	{
-		if (ft_get_time(ms) == 1)
-			break ;
-	}*/
 }
 
-int	ft_get_time(int ms)
+long long int	ft_actual_time(void)
 {
 	struct timeval	time;
 	long long int	seconds;
 	long long int	microseconds;
 	long long int	actual;
-	long long int	transcurrido;
-	long long int	start;
 
-	transcurrido = 0;
-	start = 0;
-	ms = ms * 1000;
-	if (gettimeofday(&time, NULL) == 0)
-	{
-		seconds = time.tv_sec * 1000000;
-		microseconds = time.tv_usec;
-		start = seconds + microseconds;
-	}
-	while (transcurrido <= ms)
-	{
-		if (gettimeofday(&time, NULL) == 0)
-		{
-			seconds = time.tv_sec * 1000000;
-			microseconds = time.tv_usec;
-			actual = seconds + microseconds;
-			transcurrido = actual - start;
-			if (transcurrido >= ms)
-				break ;
-		}
-	}
-	return (1);
-}
-
-long long int	ft_actual_time(void)
-{
-	struct	timeval	time;
-	long long int	seconds;
-	long long int	microseconds;
-	long long int	actual;
-	
 	seconds = 0;
 	microseconds = 0;
 	if (gettimeofday(&time, NULL) == 0)
@@ -93,13 +38,12 @@ long long int	ft_actual_time(void)
 		microseconds = time.tv_usec;
 	}
 	actual = seconds + microseconds;
-	return (actual); //Aqui trabajo con usec/microseconds
-
+	return (actual);
 }
 
 long long int	ft_diff_time(int time_start)
 {
-	struct			timeval time;
+	struct timeval	time;
 	long long int	seconds;
 	long long int	microseconds;
 	long long int	diff;
