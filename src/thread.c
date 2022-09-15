@@ -71,7 +71,7 @@ void *ft_child(void *info)
 		// 	pthread_mutex_lock(c->other_fork);
 		// 	return (NULL);
 		// }
-
+		//c->master->mutex_print = NULL;
 		c->last_eat = ft_actual_time();
 		while (c->is_alive == 1 && c->master->child_dead == 0 && c->will_eat != 0) //Si continuo vivo y no ha muerto ningun hijo
 		{
@@ -94,12 +94,12 @@ void *ft_child(void *info)
 			//ft_sleep(c->master->time_eat);
 			pthread_mutex_unlock(c->my_fork);
 			pthread_mutex_unlock(c->other_fork);
-			// if (c->will_eat == 0)
-			// {
-			// 	c->master->was_eat = c->master->was_eat + 1;
-			// 	return (NULL);
-			// 	//break;
-			// }
+
+			if (c->will_eat == 0) //DEMO
+			{
+				return (NULL);
+				//break;
+			}
 
 			diff = ft_diff_time(c->master->time_start);
 			ft_print_message(diff, me, "is sleeping", c->master->mutex_print);

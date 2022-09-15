@@ -12,7 +12,7 @@
 
 #include "../include/philo.h"
 
-int	ft_check_argv(char **argv) //Verifico los primeros argumentos que recibo
+int	ft_check_argv(char **argv)
 {
 	int	x;
 
@@ -26,18 +26,15 @@ int	ft_check_argv(char **argv) //Verifico los primeros argumentos que recibo
 	return (0);
 }
 
-int	ft_check_input(char *str) //Verifico que sea numero y que no sea mayor a los maximos y minimos
+int	ft_check_input(char *str)
 {
 	int	sig;
 	int	x;
 
 	x = 0;
 	sig = 0;
-	if (str[x] == '-' || str[x] == '+')
-	{
-		sig = 1;
-		x++;
-	}
+	if (str[x] == '-')
+		return (1);
 	while (str[x] != '\0')
 	{
 		if (str[x] <= 47 || str[x] >= 58)

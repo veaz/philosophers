@@ -43,8 +43,8 @@ re: fclean all
 norme:
 	norminette -R CheckForbiddenSourceHeader $(SRCS)
 
-test: all
-	./philo 4 410 200 200 7
+test: re
+	./philo 1 800 200 200
 
 
 
@@ -53,7 +53,7 @@ test: all
 #5 800 200 200 #Nadie debería morir 									OK
 
 #5 800 200 200 7 #Solo comen 7 veces 									OK
-#5 800 200 200 7 | grep "4 is eating" | wc -l
+#5 800 200 200 7 | grep "4 is eating" | wc -l							OK
 
 #4 410 200 200 #Nadie debería morir 									OK
 

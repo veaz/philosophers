@@ -12,13 +12,37 @@
 
 #include "../include/philo.h"
 
-void	ft_sleep(int ms)
+void	ft_sleep(long long int ms)
 {
-	while (1)
+	// struct timeval	time;
+	// long long int	seconds;
+	// long long int	microseconds;
+	long long int	start;
+
+	// start = 0;
+	// if (gettimeofday(&time, NULL) == 0)
+	// {
+	// 	seconds = time.tv_sec * 1000000;
+	// 	microseconds = time.tv_usec;
+	// 	start = seconds + microseconds;
+	// }
+
+	start = ft_actual_time();
+	while ((((ft_actual_time() - start) / 1000) < ms))
+	{
+		usleep(1000);
+	}
+
+	// usleep(1000);
+
+	// (void)ms;
+	//usleep(100 * ms);
+
+	/*while (1)
 	{
 		if (ft_get_time(ms) == 1)
 			break ;
-	}
+	}*/
 }
 
 int	ft_get_time(int ms)

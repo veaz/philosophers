@@ -12,7 +12,7 @@
 
 #include "../include/philo.h"
 
-void	ft_first_value(t_master *master, char **argv) //Primer valor a la estructura, caso normal y especial
+void	ft_first_value(t_master *master, char **argv)
 {
 	master->number_philo = ft_atoi(argv[1]);
 	master->time_dead = ft_atoi(argv[2]);
@@ -30,39 +30,30 @@ void	ft_first_value(t_master *master, char **argv) //Primer valor a la estructur
 int	main(int argc, char **argv)
 {
 	t_master	master;
-	
+
 	argc = argc - 1;
 	master.argc = argc;
 	if (argc <= 3 || argc >= 6)
 	{
-		//printf("ERROR EN NUMERO DE ARGUMENTOS\n");
+		printf("Error: invalid number of arguments\n");
 		return (0);
 	}
-	else
+	if (ft_check_argv(argv) == 1)
 	{
-		if (ft_check_argv(argv) == 1) //Verificacion de errores
-		{
-			//printf("ERROR CON UN ARGUMENTO\n");
-			return (0);
-		}
+		printf("Error: invalid arguments\n");
+		return (0);
 	}
-	ft_first_value(&master, argv); // Le doy valor a la estructura
-
-	if (argc == 4) //Innecesario, pendiente de eliminar
-	{
-		//printf("CASO NORMAL\n");
-	}
-	else if (master.argc == 5)
-	{
-		//printf("CASO PECULIAR\n");
-	}
-	ft_create_childs(&master); // Inicio el programa
+	ft_first_value(&master, argv);
+	ft_create_childs(&master);
 	return (0);
 }
 
 /* 
 
-FALTA
+FALTAN
+
+
+LEAKS
 
 caso de 1
 matar desde el main
