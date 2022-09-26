@@ -12,51 +12,49 @@
 
 #include "../include/philo.h"
 
-void	ft_sleep(long long int ms)
+void	ft_end_eats(t_master *master)
 {
-	long long int	start;
+	int	x;
 
-	start = ft_actual_time();
-	while ((((ft_actual_time() - start) / 1000) < ms))
+	x = 0;
+	pthread_mutex_lock(master->mutex_print);
+	while (x < master->number_philo)
 	{
-		usleep(200);
+		pthread_mutex_lock(master->mutex[x]);
+		x++;
 	}
+	ft_free(master);
 }
 
-long long int	ft_actual_time(void)
+void	ft_dead(t_master *master, int x)
 {
-	struct timeval	time;
-	long long int	seconds;
-	long long int	microseconds;
-	long long int	actual;
+	int	diff;
 
-	seconds = 0;
-	microseconds = 0;
-	if (gettimeofday(&time, NULL) == 0)
-	{
-		seconds = time.tv_sec * 1000000;
-		microseconds = time.tv_usec;
-	}
-	actual = seconds + microseconds;
-	return (actual);
+	diff = ft_diff_time(master->time_start);
+	ft_print_message(diff, x, "died", master->mutex_print);
+	ft_free(master);
 }
 
-long long int	ft_diff_time(int time_start)
+void	ft_free(t_master *master)
 {
-	struct timeval	time;
-	long long int	seconds;
-	long long int	microseconds;
-	long long int	diff;
-	long long int	actual;
+	int	x;
 
-	seconds = 0;
-	microseconds = 0;
-	if (gettimeofday(&time, NULL) == 0)
-	{
-		seconds = time.tv_sec * 1000000;
-		microseconds = time.tv_usec;
+	x = 0;
+	while (x < master->number_philo)
+	{	
+		if (master->struct_childs[x])
+			free(master->struct_childs[x]);
+		if (master->mutex[x])
+			free(master->mutex[x]);
+		x++;
 	}
-	actual = seconds + microseconds;
-	diff = actual - time_start;
-	return (diff);
+	if (master->struct_childs)
+		free(master->struct_childs);
+	if (master->mutex)
+		free(master->mutex);
+	if (master->mutex_print)
+		free(master->mutex_print);
+	if (master->childs)
+		free(master->childs);
+	exit(0);
 }

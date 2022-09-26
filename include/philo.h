@@ -65,5 +65,9 @@ void			ft_sleep(long long int ms);
 int				ft_get_time(int ms);
 long long int	ft_actual_time(void);
 long long int	ft_diff_time(int time_start);
+void			ft_create_threads(t_master *master);
+void			ft_end_eats(t_master *master);
+void			ft_dead(t_master *master, int x);
+void			ft_free(t_master *master);
 
 #endif

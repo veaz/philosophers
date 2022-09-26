@@ -5,6 +5,7 @@ SRCS = ./src/philo.c \
 	./src/time.c	\
 	./src/child_real.c \
 	./src/thread.c \
+	./src/utils.c \
 
 OBJS = $(SRCS:.c=.o)
 
