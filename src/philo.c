@@ -50,10 +50,7 @@ int	main(int argc, char **argv)
 
 /* 
 
-FALTAN
-
-Leaks
-Proteger los mallocs
+FALTA
 
 Makefile
 
