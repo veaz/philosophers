@@ -16,6 +16,6 @@ void	ft_print_message(int time, int child,
 	char *message, pthread_mutex_t *mutex_print)
 {
 	pthread_mutex_lock(mutex_print);
-	printf("%i %i %s\n",time / 1000, child + 1, message);
+	printf("%i %i %s\n", time / 1000, child + 1, message);
 	pthread_mutex_unlock(mutex_print);
 }

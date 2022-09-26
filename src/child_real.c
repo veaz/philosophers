@@ -43,7 +43,8 @@ void	ft_create_forks(t_master *master)
 	int	x;
 
 	x = 0;
-	master->mutex = (pthread_mutex_t **)malloc(master->number_philo * sizeof(pthread_mutex_t *));
+	master->mutex = (pthread_mutex_t **)malloc
+		(master->number_philo * sizeof(pthread_mutex_t *));
 	while (x < master->number_philo)
 	{
 		master->mutex[x] = malloc(sizeof(pthread_mutex_t));
@@ -72,10 +73,12 @@ void	ft_create_threads(t_master *master)
 	int	x;
 
 	x = 0;
-	master->childs = (pthread_t *)malloc(master->number_philo * sizeof(pthread_t *));
+	master->childs = (pthread_t *)malloc
+		(master->number_philo * sizeof(pthread_t *));
 	while (x < master->number_philo)
 	{
-		if (pthread_create(&master->childs[x] , NULL, ft_child, (void *)master->struct_childs[x]) == 0)
+		if (pthread_create(&master->childs[x], NULL,
+				ft_child, (void *)master->struct_childs[x]) == 0)
 			x++;
 	}
 }
@@ -115,7 +118,6 @@ void	ft_create_childs(t_master *master)
 	master->start = 1;
 	ft_sleep(1);
 	master->time_start = ft_actual_time();
-
 	y = 0;
 	x = 0;
 	// int diff;

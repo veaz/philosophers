@@ -52,6 +52,7 @@ int	main(int argc, char **argv)
 
 FALTAN
 
-LEAKS
+Leaks
+Proteger los mallocs
 
 */
