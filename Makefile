@@ -48,7 +48,7 @@ fclean: clean
 re: fclean all
 
 norme:
-	norminette -R CheckForbiddenSourceHeader $(SRCS)
+	norminette -R CheckForbiddenSourceHeader $(SRCS) $(HEADER)
 
 test: re
 	./philo 4 410 200 200
