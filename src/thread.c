@@ -23,9 +23,7 @@ void	ft_wait_type(t_child *c)
 		}
 	}
 	if (c->type_of_child == 1)
-	{
-		ft_sleep(1);
-	}
+		ft_sleep(c->master->time_dead / 4);
 }
 
 void	ft_eat(t_child *c, long long int diff, int me)
@@ -43,8 +41,8 @@ void	ft_eat(t_child *c, long long int diff, int me)
 	c->will_eat = c->will_eat - 1;
 	c->my_eats = c->my_eats + 1;
 	c->master->total_eats = c->master->total_eats + 1;
-	pthread_mutex_unlock(c->my_fork);
 	pthread_mutex_unlock(c->other_fork);
+	pthread_mutex_unlock(c->my_fork);
 }
 
 void	*ft_child(void *info)

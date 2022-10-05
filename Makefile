@@ -9,6 +9,10 @@ SRCS = ./src/philo.c \
 
 OBJS = $(SRCS:.c=.o)
 
+DEPS = $(addsuffix .d, $(basename $(notdir $(SRCS))))
+
+DEPS_DEL = ./*.d ./src/*.d
+
 NAME = philo
 
 HEADER = ./include/philo.h
@@ -17,7 +21,7 @@ CC = gcc
 
 # gcc -pthread
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -MMD
 
 # -fsanitize=thread
 
@@ -30,11 +34,13 @@ all: $(NAME)
 .c.o:
 	$(CC) $(CFLAGS) $(SRC) -I $(HEADER) -c $< -o $(<:.c=.o)
 
+-include $(DEPS)
 $(NAME): $(OBJS) $(HEADER)
-	$(CC) $(CFLAGS) $(SRCS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+#DUDA DE SI SE COMPILA SRC O OBJS
 
 clean:
-	$(RM) $(OBJS)
+	$(RM) $(OBJS) $(DEPS_DEL)
 
 fclean: clean
 	$(RM) $(NAME)
@@ -45,7 +51,7 @@ norme:
 	norminette -R CheckForbiddenSourceHeader $(SRCS)
 
 test: re
-	./philo 200 800 200 200
+	./philo 4 410 200 200
 
 
 
