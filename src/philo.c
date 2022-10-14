@@ -47,11 +47,3 @@ int	main(int argc, char **argv)
 	ft_create_childs(&master);
 	return (0);
 }
-
-/* 
-
-FALTA
-
-Makefile
-
-*/

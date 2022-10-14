@@ -19,7 +19,7 @@ void	ft_sleep(long long int ms)
 	start = ft_actual_time();
 	while ((((ft_actual_time() - start) / 1000) < ms))
 	{
-		usleep(100);
+		usleep(ms / 2);
 	}
 }
 
