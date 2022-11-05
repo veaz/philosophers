@@ -29,6 +29,7 @@ all: $(NAME)
 .c.o:
 	$(CC) $(CFLAGS) $(SRC) -I $(HEADER) -c $< -o $(<:.c=.o)
 
+
 -include $(DEPS)
 $(NAME): $(OBJS) $(HEADER)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
