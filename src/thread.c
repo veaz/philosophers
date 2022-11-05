@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philo.h"
+#include "../inc/philo.h"
 
 void	ft_wait_type(t_child *c)
 {
@@ -22,7 +22,7 @@ void	ft_wait_type(t_child *c)
 			break ;
 		}
 	}
-	if (c->type_of_child == 0)
+	if (c->type_of_child == 1)
 		ft_sleep(c->master->time_dead / 4);
 }
 

@@ -15,7 +15,7 @@ DEPS_DEL = ./*.d ./src/*.d
 
 NAME = philo
 
-HEADER = ./include/philo.h
+HEADER = ./inc/philo.h
 
 CC = gcc
 

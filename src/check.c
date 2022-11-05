@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philo.h"
+#include "../inc/philo.h"
 
 int	ft_check_argv(char **argv)
 {
@@ -28,11 +28,9 @@ int	ft_check_argv(char **argv)
 
 int	ft_check_input(char *str)
 {
-	int	sig;
 	int	x;
 
 	x = 0;
-	sig = 0;
 	if (str[x] == '-')
 		return (1);
 	while (str[x] != '\0')

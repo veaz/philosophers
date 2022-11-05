@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philo.h"
+#include "../inc/philo.h"
 
 t_child	*ft_create_node_struct_child(int philo, t_master *master)
 {
@@ -80,7 +80,6 @@ void	ft_create_struct_childs(t_master *master)
 
 void	ft_create_childs(t_master *master)
 {
-	int				x;
 	int				y;
 
 	ft_create_forks(master);
@@ -90,7 +89,6 @@ void	ft_create_childs(t_master *master)
 	ft_sleep(1);
 	master->time_start = ft_actual_time();
 	y = 0;
-	x = 0;
 	while (1)
 	{
 		if (y == master->number_philo)

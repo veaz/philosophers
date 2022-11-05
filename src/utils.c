@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philo.h"
+#include "../inc/philo.h"
 
 void	ft_end_eats(t_master *master)
 {

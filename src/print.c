@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philo.h"
+#include "../inc/philo.h"
 
 void	ft_print_message(int time, int child,
 	char *message, pthread_mutex_t *mutex_print)
