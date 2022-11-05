@@ -19,7 +19,6 @@ HEADER = ./inc/philo.h
 
 CC = gcc
 
-
 CFLAGS = -Wall -Wextra -Werror -MMD
 
 RM = rm -f
